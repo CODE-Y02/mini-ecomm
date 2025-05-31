@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+
+import { Toaster } from "@/components/ui/sonner";
+import NavLink from "@/components/nav/NavLink";
+import { ArrowLeftSquareIcon } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="p-2 px-4 border-b-2">
+          <NavLink href="/">
+            <ArrowLeftSquareIcon />
+            Go Back Home
+          </NavLink>
+        </div>
+        <main>{children}</main>
+        <Toaster position="top-center" />
       </body>
     </html>
   );
