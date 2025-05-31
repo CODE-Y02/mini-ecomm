@@ -4,10 +4,11 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 
 const ThanksPage = async ({
-  searchParams: { o: id },
+  searchParams,
 }: {
-  searchParams: { o: string };
+  searchParams: Promise<{ o: string }>;
 }) => {
+  const { o: id } = await searchParams;
   const order = await db.order.findUnique({
     where: { id },
     include: { items: true },
