@@ -4,6 +4,7 @@ import { TFormSchema } from "@/components/checkout/CheckoutForm";
 import { db } from "@/lib/db";
 import { TOrderStatus } from "@/types/types";
 import { sendEmail } from "@/lib/mail";
+import { revalidatePath } from "next/cache";
 
 type TCreateOrder = {
   items: ICartItem[];
@@ -44,6 +45,7 @@ export const createOrder = async (input: TCreateOrder) => {
 
       return order;
     });
+    revalidatePath("/admin");
     return order;
   } catch (error) {
     console.error("Error creating order:", error);
@@ -86,6 +88,7 @@ export const changeOrderStatus = async (
     });
 
     console.log("Order status changed successfully:", orderId, newStatus);
+    revalidatePath("/admin");
     return true;
   } catch (error) {
     console.error("Error changing order status:", orderId, newStatus, error);
